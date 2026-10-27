@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #1e1e1e;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: -apple-system, "Segoe UI", sans-serif;
+    }
+    #toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #252526;
+      border-bottom: 1px solid #333;
+      color: #ccc;
+      font-size: 12px;
+    }
+    #toolbar label {
+      color: #999;
+    }
+    #toolbar select,
+    #toolbar input,
+    #toolbar button {
+      background: #3c3c3c;
+      color: #ddd;
+      border: 1px solid #4a4a4a;
+      border-radius: 4px;
+      font: inherit;
+      height: 24px;
+      padding: 0 6px;
+    }
+    #toolbar select:focus,
+    #toolbar input:focus,
+    #toolbar button:focus-visible {
+      outline: 1px solid #007acc;
+      outline-offset: -1px;
+    }
+    #toolbar button {
+      width: 24px;
+      padding: 0;
+      cursor: pointer;
+    }
+    #toolbar button:hover {
+      background: #4a4a4a;
+    }
+    #toolbar button.text-button {
+      width: auto;
+      padding: 0 8px;
+    }
+    #toolbar button:disabled,
+    #toolbar input:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    #toolbar input[type="range"] {
+      width: 80px;
+      padding: 0;
+      background: none;
+      border: none;
+      accent-color: #007acc;
+    }
+    .range-value {
+      min-width: 32px;
+      color: #999;
+    }
+    #font-size {
+      width: 44px;
+      text-align: center;
+    }
+    .separator {
+      width: 1px;
+      height: 16px;
+      background: #444;
+      margin: 0 4px;
+    }
+    #guide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      pointer-events: none;
+      outline: 1px dashed rgba(0, 122, 204, 0.5);
+    }
+    #guide[hidden] {
+      display: none;
+    }
+    #guide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .guide-handle {
+      position: absolute;
+      pointer-events: auto;
+      background: #007acc;
+      border: 1px solid #fff;
+      box-sizing: border-box;
+      opacity: 0.8;
+    }
+    .guide-handle:hover {
+      opacity: 1;
+    }
+    .guide-handle.corner {
+      width: 12px;
+      height: 12px;
+      right: -6px;
+      bottom: -6px;
+      cursor: nwse-resize;
+    }
+    .guide-handle.right {
+      width: 8px;
+      height: 24px;
+      right: -4px;
+      top: calc(50% - 12px);
+      cursor: ew-resize;
+    }
+    .guide-handle.bottom {
+      width: 24px;
+      height: 8px;
+      bottom: -4px;
+      left: calc(50% - 12px);
+      cursor: ns-resize;
+    }
+    #editor {
+      flex: 1;
+      min-height: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <label for="font-family">Police</label>
+    <select id="font-family"></select>
+    <span class="separator"></span>
+    <label for="font-size">Taille</label>
+    <button id="font-smaller" title="Réduire">−</button>
+    <input id="font-size" type="number" min="8" max="48" step="1">
+    <button id="font-bigger" title="Agrandir">+</button>
+    <span class="separator"></span>
+    <button id="guide-import" class="text-button" title="Importer une image PNG comme guide">Image…</button>
+    <input id="guide-file" type="file" accept="image/png" hidden>
+    <label for="guide-opacity">Opacité</label>
+    <input id="guide-opacity" type="range" min="5" max="100" value="35" disabled>
+    <span id="guide-opacity-value" class="range-value">35 %</span>
+    <label for="guide-scale">Échelle</label>
+    <input id="guide-scale" type="range" min="10" max="400" value="100" disabled>
+    <span id="guide-scale-value" class="range-value">100 %</span>
+    <button id="guide-toggle" class="text-button" disabled>Masquer</button>
+    <button id="guide-remove" class="text-button" title="Retirer l'image" disabled>Retirer</button>
+  </div>
+  <div id="editor"></div>
+  <script src="dist/renderer.js"></script>
+</body>
+</html>

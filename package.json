@@ -1,0 +1,54 @@
+{
+  "name": "appelectron",
+  "productName": "ArtSCII",
+  "version": "1.0.0",
+  "description": "Text editor to do ASCII art",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "build": "esbuild src/renderer.js --bundle --outfile=dist/renderer.js",
+    "start": "npm run build && electron .",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win"
+  },
+  "build": {
+    "appId": "com.asciiart.editor",
+    "productName": "ASCII Art",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "dist/**/*"
+    ],
+    "mac": {
+      "target": {
+        "target": "dmg",
+        "arch": [
+          "universal"
+        ]
+      },
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "devDependencies": {
+    "@codemirror/commands": "^6.6.0",
+    "@codemirror/language": "^6.10.0",
+    "@codemirror/state": "^6.4.0",
+    "@codemirror/view": "^6.28.0",
+    "electron": "^44.9.1",
+    "electron-builder": "^26.18.0",
+    "esbuild": "^0.28.2"
+  }
+}
